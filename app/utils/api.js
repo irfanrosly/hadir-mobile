@@ -32,12 +32,19 @@ const create = () => {
     return apiHadir.post(`/attendance`, JSON.stringify(params));
   };
 
+  const getAttendance = params => {
+    return apiHadir.get(
+      `/attendance/${params.date}/${params.year}/${params.class}`
+    );
+  };
+
   return {
     getUser,
     createStudent,
     createAttendance,
     getStudent,
-    getStudentAll
+    getStudentAll,
+    getAttendance
   };
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 import {
   Button,
   Text,
@@ -63,35 +63,70 @@ class GetStudentScreen extends React.Component {
         </Header>
         <View style={styles.getStartedContainer}>
           <Item regular style={{ width: "100%", marginVertical: 15 }}>
-            <Picker
-              mode="dropdown"
-              placeholder="Select Year"
-              note={false}
-              selectedValue={this.state.year}
-              onValueChange={this.onValueChangeYear.bind(this)}
-            >
-              <Picker.Item label="1" value="1" />
-              <Picker.Item label="2" value="2" />
-              <Picker.Item label="3" value="3" />
-              <Picker.Item label="4" value="4" />
-              <Picker.Item label="5" value="5" />
-              <Picker.Item label="6" value="6" />
-            </Picker>
+            {Platform.OS === "android" ? (
+              <Picker
+                mode="dropdown"
+                placeholder="Select Year"
+                note={false}
+                selectedValue={this.state.year}
+                onValueChange={this.onValueChangeYear.bind(this)}
+              >
+                <Picker.Item label="Select Year" value="" />
+                <Picker.Item label="1" value="1" />
+                <Picker.Item label="2" value="2" />
+                <Picker.Item label="3" value="3" />
+                <Picker.Item label="4" value="4" />
+                <Picker.Item label="5" value="5" />
+                <Picker.Item label="6" value="6" />
+              </Picker>
+            ) : (
+              <Picker
+                mode="dropdown"
+                placeholder="Select Year"
+                note={false}
+                selectedValue={this.state.year}
+                onValueChange={this.onValueChangeYear.bind(this)}
+              >
+                <Picker.Item label="1" value="1" />
+                <Picker.Item label="2" value="2" />
+                <Picker.Item label="3" value="3" />
+                <Picker.Item label="4" value="4" />
+                <Picker.Item label="5" value="5" />
+                <Picker.Item label="6" value="6" />
+              </Picker>
+            )}
           </Item>
           <Item regular style={{ width: "100%", marginVertical: 15 }}>
-            <Picker
-              mode="dropdown"
-              placeholder="Select Class"
-              note={false}
-              selectedValue={this.state.classs}
-              onValueChange={this.onValueChangeClass.bind(this)}
-            >
-              <Picker.Item label="Abba" value="Abba" />
-              <Picker.Item label="Alch" value="Alch" />
-              <Picker.Item label="Mogu" value="Mogu" />
-              <Picker.Item label="Trea" value="Trea" />
-              <Picker.Item label="Trax" value="Trax" />
-            </Picker>
+            {Platform.OS === "android" ? (
+              <Picker
+                mode="dropdown"
+                placeholder="Select Class"
+                note={false}
+                selectedValue={this.state.classs}
+                onValueChange={this.onValueChangeClass.bind(this)}
+              >
+                <Picker.Item label="Select Class" value="" />
+                <Picker.Item label="Abba" value="Abba" />
+                <Picker.Item label="Alch" value="Alch" />
+                <Picker.Item label="Mogu" value="Mogu" />
+                <Picker.Item label="Trea" value="Trea" />
+                <Picker.Item label="Trax" value="Trax" />
+              </Picker>
+            ) : (
+              <Picker
+                mode="dropdown"
+                placeholder="Select Class"
+                note={false}
+                selectedValue={this.state.classs}
+                onValueChange={this.onValueChangeClass.bind(this)}
+              >
+                <Picker.Item label="Abba" value="Abba" />
+                <Picker.Item label="Alch" value="Alch" />
+                <Picker.Item label="Mogu" value="Mogu" />
+                <Picker.Item label="Trea" value="Trea" />
+                <Picker.Item label="Trax" value="Trax" />
+              </Picker>
+            )}
           </Item>
           <Button
             onPress={() => this.submitStudent()}

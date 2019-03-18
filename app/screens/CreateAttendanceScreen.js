@@ -47,8 +47,10 @@ class CreateAttendanceScreen extends React.Component {
         <View style={styles.getStartedContainer}>
           <Item regular style={{ marginVertical: 15 }}>
             <Input
+              keyboardType="number-pad"
               placeholder="ID"
               onChangeText={id => this.setState({ id })}
+              maxLengt={6}
             />
           </Item>
 

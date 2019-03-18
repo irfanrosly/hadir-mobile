@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, View, Platform, StatusBar } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
+import moment from "moment";
 import {
   Button,
   Text,
-  Input,
   Item,
   Picker,
   Header,
@@ -12,28 +12,31 @@ import {
   Right,
   Title,
   Icon,
-  Container
+  DatePicker
 } from "native-base";
 import { connect } from "react-redux";
-import StudentActions from "../redux/student";
+import AttendanceActions from "../redux/attendance";
 
-class CreateStudentScreen extends React.Component {
+class GetAttendanceScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { id: 0, name: "", year: undefined, classs: undefined };
+    this.state = { year: undefined, classs: "", chosenDate: new Date() };
+    this.setDate = this.setDate.bind(this);
   }
   static navigationOptions = {
     header: null
   };
 
-  componentDidMount() {}
-
-  submitStudent = () => {
-    const { id, name, year, classs } = this.state;
-    if (id && name && year && classs) {
-      this.props.createStudent(id, name, parseInt(year), classs.toLowerCase());
+  submitAttendance = () => {
+    const { year, classs, chosenDate } = this.state;
+    if (year && classs && chosenDate) {
+      this.props.getAttendance(
+        moment(chosenDate).format("YYYYMMDD"),
+        parseInt(year),
+        classs.toLowerCase()
+      );
     } else {
-      alert("Fill in all the details!");
+      alert("Fill all the details!");
     }
   };
 
@@ -49,36 +52,25 @@ class CreateStudentScreen extends React.Component {
     });
   }
 
+  setDate(newDate) {
+    this.setState({ chosenDate: newDate });
+  }
+
   render() {
     return (
-      <Container>
-        <Header style={{ backgroundColor: "#480273" }}>
+      <View style={styles.container}>
+        <Header style={{ backgroundColor: "#3FB48A" }}>
           <Left>
             <Button onPress={() => this.props.navigation.goBack()} transparent>
               <Icon name="arrow-back" style={{ color: "white" }} />
             </Button>
           </Left>
           <Body>
-            <Title style={{ color: "white" }}>New Student</Title>
+            <Title style={{ color: "white" }}>Get Student</Title>
           </Body>
           <Right />
         </Header>
         <View style={styles.getStartedContainer}>
-          <Item regular style={{ marginVertical: 15 }}>
-            <Input
-              keyboardType="number-pad"
-              placeholder="ID"
-              onChangeText={id => this.setState({ id })}
-              maxLength={6}
-            />
-          </Item>
-          <Item regular style={{ marginVertical: 15 }}>
-            <Input
-              placeholder="Name"
-              onChangeText={name => this.setState({ name })}
-            />
-          </Item>
-
           <Item regular style={{ width: "100%", marginVertical: 15 }}>
             {Platform.OS === "android" ? (
               <Picker
@@ -145,37 +137,83 @@ class CreateStudentScreen extends React.Component {
               </Picker>
             )}
           </Item>
+          <Item regular style={{ width: "100%", marginVertical: 15 }}>
+            <DatePicker
+              defaultDate={new Date()}
+              minimumDate={new Date(2018, 1, 1)}
+              maximumDate={new Date(2020, 12, 31)}
+              locale={"en"}
+              timeZoneOffsetInMinutes={undefined}
+              modalTransparent={false}
+              animationType={"fade"}
+              androidMode={"default"}
+              placeHolderText="Select date"
+              textStyle={{ color: "green" }}
+              placeHolderTextStyle={{ color: "#d3d3d3" }}
+              onDateChange={this.setDate}
+              disabled={false}
+              style={{ width: "100%" }}
+            />
+          </Item>
+          {/* <Text>{this.state.chosenDate}</Text> */}
           <Button
-            onPress={() => this.submitStudent()}
+            onPress={() => this.submitAttendance()}
             style={{
               marginVertical: 15,
               alignSelf: "center",
-              backgroundColor: "#480273"
+              backgroundColor: "#3FB48A"
             }}
           >
-            <Text style={{ color: "white" }}>CREATE STUDENT</Text>
+            <Text style={{ color: "white" }}>GET ATTENDANCE</Text>
           </Button>
         </View>
-      </Container>
+        <View>
+          {this.props.attendanceList.length > 0 &&
+            this.props.attendanceList.map(item => (
+              <View
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "#3FB48A",
+                  marginHorizontal: 10,
+                  marginVertical: 5,
+                  height: 30,
+                  alignItems: "center",
+                  borderRadius: 10,
+                  paddingHorizontal: 15
+                }}
+              >
+                <View style={{ flex: 0.7 }}>
+                  <Text style={{ fontSize: 14 }}>{item.name}</Text>
+                </View>
+                <View
+                  style={{ flex: 0.3, alignItems: "flex-end", opacity: 0.5 }}
+                >
+                  <Text style={{ fontSize: 14 }}>{item.id}</Text>
+                </View>
+              </View>
+            ))}
+        </View>
+      </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  testing: state.playground.text
+  attendanceList: state.attendance.attendanceList
 });
 
 const mapDispatchToProps = dispatch => {
   return {
-    createStudent: (id, name, year, classs) =>
-      dispatch(StudentActions.createStudent(id, name, year, classs))
+    getAttendance: (date, year, classs) =>
+      dispatch(AttendanceActions.getAttendance(date, year, classs))
+    // getStudentAll: () => dispatch(StudentActions.getStudentAll())
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateStudentScreen);
+)(GetAttendanceScreen);
 
 const styles = StyleSheet.create({
   container: {

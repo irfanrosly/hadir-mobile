@@ -50,6 +50,7 @@ class HomeScreen extends React.Component {
             <Text style={styles.categoryCardText}>View Student</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("GetAttendance")}
             style={[styles.categoryCard, { backgroundColor: "#3FB48A" }]}
           >
             <Text style={styles.categoryCardText}>View Attendance</Text>

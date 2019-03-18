@@ -28,6 +28,7 @@ const getStudent = state => {
 };
 
 const getStudentSuccess = (state, action) => {
+  console.log(action.payload);
   return state.merge({
     loading: false,
     studentList: [...action.payload]

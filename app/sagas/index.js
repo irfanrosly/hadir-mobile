@@ -7,7 +7,7 @@ import { AttendanceTypes } from "../redux/attendance";
 // Saga files
 import { playgroundTestSaga } from "./playground";
 import { createStudent, getStudent, getStudentAll } from "./student";
-import { createAttendance } from "./attendance";
+import { createAttendance, getAttendance } from "./attendance";
 import API from "../utils/api";
 
 const api = API.create();
@@ -18,6 +18,7 @@ export default function* rootSaga() {
     takeLatest(StudentTypes.CREATE_STUDENT, createStudent, api),
     takeLatest(StudentTypes.GET_STUDENT, getStudent, api),
     takeLatest(StudentTypes.GET_STUDENT_ALL, getStudentAll, api),
-    takeLatest(AttendanceTypes.CREATE_ATTENDANCE, createAttendance, api)
+    takeLatest(AttendanceTypes.CREATE_ATTENDANCE, createAttendance, api),
+    takeLatest(AttendanceTypes.GET_ATTENDANCE, getAttendance, api)
   ]);
 }

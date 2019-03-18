@@ -13,8 +13,6 @@ export function* createStudent(api, action) {
 
 export function* getStudent(api, action) {
   const response = yield call(api.getStudent, action);
-  console.log(response);
-  // alert(JSON.stringify(response.data));
   if (response.ok) {
     yield put(StudentActions.getStudentSuccess(response.data.data));
   }
@@ -22,8 +20,6 @@ export function* getStudent(api, action) {
 
 export function* getStudentAll(api, action) {
   const response = yield call(api.getStudentAll, action);
-  console.log(response);
-  // alert(JSON.stringify(response.data));
   if (response.ok) {
     yield put(StudentActions.getStudentSuccess(response.data.data));
   }

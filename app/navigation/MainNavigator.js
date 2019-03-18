@@ -5,15 +5,16 @@ import { createStackNavigator } from "react-navigation";
 import HomeScreen from "../screens/HomeScreen";
 import CreateStudentScreen from "../screens/CreateStudentScreen";
 import CreateAttendanceScreen from "../screens/CreateAttendanceScreen";
-import GetStudent from "../screens/GetStudentScreen";
 import GetStudentScreen from "../screens/GetStudentScreen";
+import GetAttendanceScreen from "../screens/GetAttendanceScreen";
 
 export default createStackNavigator(
   {
     Home: HomeScreen,
     CreateStudent: CreateStudentScreen,
     CreateAttendance: CreateAttendanceScreen,
-    GetStudent: GetStudentScreen
+    GetStudent: GetStudentScreen,
+    GetAttendance: GetAttendanceScreen
   },
   {
     initialRouteName: "Home",
